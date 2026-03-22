@@ -8,6 +8,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private Player thePlayer;
 
     public Game1()
     {
@@ -21,6 +22,8 @@ public class Game1 : Game
         // TODO: Add your initialization logic here
 
         base.Initialize();
+
+        thePlayer = new Player(_graphics);
     }
 
     protected override void LoadContent()
@@ -38,6 +41,8 @@ public class Game1 : Game
         // TODO: Add your update logic here
 
         base.Update(gameTime);
+
+        thePlayer.Update();
     }
 
     protected override void Draw(GameTime gameTime)
@@ -47,5 +52,7 @@ public class Game1 : Game
         // TODO: Add your drawing code here
 
         base.Draw(gameTime);
+
+        thePlayer.Draw(_spriteBatch);
     }
 }
