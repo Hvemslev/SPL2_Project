@@ -1,5 +1,7 @@
+using System;
 using System.Numerics;
 using Microsoft.Xna.Framework.Input;
+//using System.Windows;
 
 namespace SPL2_Project;
 
@@ -17,8 +19,14 @@ public class Enemy
 
     public void Chase(Player player)
     {
+        Vector2 direction = player.position-position;
         //Vector2 startPos = position;
-        position+=enemySpeed*(player.position-position);
+        
+        Vector2.Normalize(direction);
+        
+        position+=direction*enemySpeed;
 
+        
+        
     }
 }

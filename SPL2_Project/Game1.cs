@@ -26,7 +26,7 @@ public class Game1 : Game
         _texture = new(GraphicsDevice, 1, 1);
         _texture.SetData([Color.White]);
         player = new Player();
-        enemy = new Enemy(500, 500);
+        enemy = new Enemy(400, 400);
     }
 
     protected override void LoadContent()
