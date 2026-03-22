@@ -11,6 +11,7 @@ public class Game1 : Game
     private Texture2D _texture;
 
     private Player player;
+    private Enemy enemy;
 
     public Game1()
     {
@@ -25,6 +26,7 @@ public class Game1 : Game
         _texture = new(GraphicsDevice, 1, 1);
         _texture.SetData([Color.White]);
         player = new Player();
+        enemy = new Enemy(500, 500);
     }
 
     protected override void LoadContent()
@@ -39,6 +41,7 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
         player.Update();
+        enemy.Chase(player);
 
         base.Update(gameTime);
     }
@@ -49,6 +52,7 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
         _spriteBatch.Draw(_texture, new Rectangle((int)player.position.X, (int)player.position.Y, 20, 20), Color.White);
+        _spriteBatch.Draw(_texture, new Rectangle((int)enemy.position.X, (int)enemy.position.Y, 20, 20), Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);
