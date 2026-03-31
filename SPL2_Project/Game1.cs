@@ -8,7 +8,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Player thePlayer;
+    private GameObject thePlayer;
 
     public Game1()
     {
@@ -23,7 +23,10 @@ public class Game1 : Game
 
         base.Initialize();
 
-        thePlayer = new Player(_graphics);
+
+        thePlayer = new GameObject();
+        thePlayer.Transform.Position = new Vector2(100, 100);
+        thePlayer.AddComponent(new Player(_graphics));
     }
 
     protected override void LoadContent()
@@ -42,7 +45,7 @@ public class Game1 : Game
 
         base.Update(gameTime);
 
-        thePlayer.Update();
+        thePlayer.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
