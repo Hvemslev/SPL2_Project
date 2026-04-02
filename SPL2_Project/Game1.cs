@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,10 +9,12 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Texture2D _texture;
+    public static Texture2D _texture;
 
     private Player player;
     private Enemy enemy;
+
+    public static List<Bullet> bullets = new List<Bullet>();
 
     public Game1()
     {
@@ -43,6 +46,13 @@ public class Game1 : Game
         player.Update();
         enemy.Chase(player);
 
+        foreach(Bullet b in bullets)
+        {
+            b.Update();
+        }
+
+
+
         base.Update(gameTime);
     }
 
@@ -51,6 +61,13 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
+
+        foreach(Bullet b in bullets)
+        {
+            b.Draw(_spriteBatch);
+        }
+
+
         _spriteBatch.Draw(_texture, new Rectangle((int)player.position.X, (int)player.position.Y, 20, 20), Color.White);
         _spriteBatch.Draw(_texture, new Rectangle((int)enemy.position.X, (int)enemy.position.Y, 20, 20), Color.White);
         _spriteBatch.End();
