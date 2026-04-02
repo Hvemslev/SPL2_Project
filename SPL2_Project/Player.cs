@@ -13,22 +13,22 @@ public class Player
     {
         if (Keyboard.GetState().IsKeyDown(Keys.W))
         {
-            position.Y-=playerSpeed;
+            position.Y -= playerSpeed;
         }
 
         if (Keyboard.GetState().IsKeyDown(Keys.S))
         {
-            position.Y+=playerSpeed;
+            position.Y += playerSpeed;
         }
 
         if (Keyboard.GetState().IsKeyDown(Keys.A))
         {
-            position.X-=playerSpeed;
+            position.X -= playerSpeed;
         }
 
         if (Keyboard.GetState().IsKeyDown(Keys.D))
         {
-            position.X+=playerSpeed;
+            position.X += playerSpeed;
         }
     }
 }
