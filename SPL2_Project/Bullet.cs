@@ -9,14 +9,6 @@ namespace SPL2_Project;
 
 public class Bullet
 {
-    
-
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
-    private Texture2D _texture;
-
-    
-    
     Vector2 position;
     Vector2 direction;
     int bulletSpeed;
