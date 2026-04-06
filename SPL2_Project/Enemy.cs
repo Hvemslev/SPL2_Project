@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Numerics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace SPL2_Project;
@@ -15,7 +15,9 @@ public class Enemy
 
     float maxRange = 300;
 
-    float rateOfFire = 5f;
+    int bulletSpeed = 15;
+
+    double shotCooldown = 0;
     
 
     public Enemy(int x, int y)
@@ -24,7 +26,7 @@ public class Enemy
         position.Y = y;
     }
 
-    public void Chase(Player player)
+    public void Chase(Player player, GameTime gameTime)
     {
         
         Vector2 directionLong = player.position-position;
@@ -38,15 +40,28 @@ public class Enemy
             position += direction * enemySpeed;
         } 
         
+
         
-        if(distance < maxRange)
+
+
+        if(distance <= maxRange)
         {
-            shoot();
-        } 
+            shotCooldown += gameTime.ElapsedGameTime.TotalSeconds;
+            if(shotCooldown >= 2)
+            {
+                shoot();
+                shotCooldown=0; 
+            }
+        } else
+        {
+            shotCooldown=0;
+        }
+        
+        
     }
 
     public void shoot()
     {
-        Game1.bullets.Add(new Bullet(position, direction, 4));
+        Game1.bullets.Add(new Bullet(position, direction, bulletSpeed));
     }
 }

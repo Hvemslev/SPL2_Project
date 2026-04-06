@@ -16,6 +16,8 @@ public class Game1 : Game
 
     public static List<Bullet> bullets = new List<Bullet>();
 
+    public static GameTime gameTime;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -30,6 +32,7 @@ public class Game1 : Game
         _texture.SetData([Color.White]);
         player = new Player();
         enemy = new Enemy(400, 400);
+        gameTime = new GameTime();
     }
 
     protected override void LoadContent()
@@ -44,7 +47,7 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
         player.Update();
-        enemy.Chase(player);
+        enemy.Chase(player, gameTime);
 
         foreach(Bullet b in bullets)
         {
