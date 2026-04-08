@@ -1,13 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SPL2_Project;
+namespace PatternLibrary;
 
+// TODO: Make it work with Tilebuilder scripts
 /// <summary>
-/// Lavet i tidligere projekt (se rapport "Design Patterns Projekt Repulse" i afleveringsmappen på bilag 15)
 /// Class responsible for rendering sprite
 /// </summary>
-public class SpriteRenderer : Component
+public class SpriteRenderer : IComponent
 {
     /// <summary>
     /// Object sprite

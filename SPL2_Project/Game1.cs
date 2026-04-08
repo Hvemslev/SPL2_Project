@@ -1,20 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PatternLibrary;
 
 namespace SPL2_Project;
 
-public class Game1 : Game
+public class Game1 : GameLogic
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
     private GameObject thePlayer;
 
-    public Game1()
+    public Game1() : base()
     {
-        _graphics = new GraphicsDeviceManager(this);
-        Content.RootDirectory = "Content";
-        IsMouseVisible = true;
     }
 
     protected override void Initialize()
@@ -26,21 +22,18 @@ public class Game1 : Game
 
         thePlayer = new GameObject();
         thePlayer.Transform.Position = new Vector2(100, 100);
-        thePlayer.AddComponent(new Player(_graphics));
+        thePlayer.AddComponent(new Player(graphics));
     }
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        base.LoadContent();
 
         // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
         // TODO: Add your update logic here
 
         base.Update(gameTime);
@@ -50,12 +43,10 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
-
         // TODO: Add your drawing code here
 
         base.Draw(gameTime);
 
-        thePlayer.Draw(_spriteBatch);
+        thePlayer.Draw(spriteBatch);
     }
 }

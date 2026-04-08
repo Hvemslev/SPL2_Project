@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace SPL2_Project;
+namespace PatternLibrary;
     
 /// <summary>
 /// Class responsible for in world coordinates and translation of coordinates
@@ -11,6 +11,7 @@ public class Transform
     /// Object position
     /// </summary>
     public Vector2 Position { get; set; }
+    
     /// <summary>
     /// Translates object position
     /// </summary>

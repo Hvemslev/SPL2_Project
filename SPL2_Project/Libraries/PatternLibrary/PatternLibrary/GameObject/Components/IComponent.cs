@@ -1,10 +1,9 @@
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SPL2_Project;
+namespace PatternLibrary;
 
-public interface Component
+public interface IComponent
 {
     /// <summary>
     /// Is component enabled

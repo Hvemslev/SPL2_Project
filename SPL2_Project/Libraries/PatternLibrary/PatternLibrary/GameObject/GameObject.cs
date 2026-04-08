@@ -1,9 +1,8 @@
-
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SPL2_Project;
+namespace PatternLibrary;
 
 /// <summary>
 /// Template for game objects
@@ -21,7 +20,7 @@ public class GameObject
     /// <summary>
     /// Dictionary containing components accessed by their name
     /// </summary>
-    private Dictionary<string, Component> components = new Dictionary<string, Component>();
+    private Dictionary<string, IComponent> components = new Dictionary<string, IComponent>();
     /// <summary>
     /// GameObject tag
     /// </summary>
@@ -37,7 +36,7 @@ public class GameObject
     /// Adds component to game object
     /// </summary>
     /// <param name="component"></param>
-    public void AddComponent(Component component)
+    public void AddComponent(IComponent component)
     {
         components.Add(component.ToString(), component);
         component.GameObject = this;
@@ -48,7 +47,7 @@ public class GameObject
     /// </summary>
     /// <param name="component">Component name</param>
     /// <returns></returns>
-    public Component GetComponent(string component)
+    public IComponent GetComponent(string component)
     {
         if (components.ContainsKey(component))
         {
@@ -64,7 +63,7 @@ public class GameObject
     /// </summary>
     public void Awake()
     {
-        foreach (Component component in components.Values)
+        foreach (IComponent component in components.Values)
         {
             component.Awake();
         }
@@ -74,7 +73,7 @@ public class GameObject
     /// </summary>
     public void Start()
     {
-        foreach (Component component in components.Values)
+        foreach (IComponent component in components.Values)
         {
             component.Start();
         }
@@ -84,7 +83,7 @@ public class GameObject
     /// </summary>
     public void Update(GameTime gameTime)
     {
-        foreach (Component component in components.Values)
+        foreach (IComponent component in components.Values)
         {
             if (component.IsEnabled)
             {
@@ -97,7 +96,7 @@ public class GameObject
     /// </summary>
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach (Component component in components.Values)
+        foreach (IComponent component in components.Values)
         {
             if (component.IsEnabled)
             {
@@ -110,7 +109,7 @@ public class GameObject
     /// </summary>
     public void Destroy()
     {
-        foreach (Component component in components.Values)
+        foreach (IComponent component in components.Values)
         {
             component.Destroy();
         }

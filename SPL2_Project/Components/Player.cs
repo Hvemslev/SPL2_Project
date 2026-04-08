@@ -2,10 +2,11 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PatternLibrary;
 
 namespace SPL2_Project;
 
-public class Player : Component
+public class Player : IComponent
 {
     private Vector2 currentLookDirection;
     private float lookAngleRadians = 0;
