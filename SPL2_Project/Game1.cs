@@ -19,9 +19,7 @@ public class Game1 : GameLogic
 
         base.Initialize();
 
-
-        thePlayer = new GameObject();
-        thePlayer.Transform.Position = new Vector2(100, 100);
+        thePlayer = ObjectManager.CreateGameObject("Player", new Vector2(100, 100));
         thePlayer.AddComponent(new Player(graphics));
     }
 
@@ -37,8 +35,6 @@ public class Game1 : GameLogic
         // TODO: Add your update logic here
 
         base.Update(gameTime);
-
-        thePlayer.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -46,7 +42,5 @@ public class Game1 : GameLogic
         // TODO: Add your drawing code here
 
         base.Draw(gameTime);
-
-        thePlayer.Draw(spriteBatch);
     }
 }

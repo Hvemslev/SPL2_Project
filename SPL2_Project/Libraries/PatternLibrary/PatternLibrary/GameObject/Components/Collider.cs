@@ -50,8 +50,8 @@ public class Collider : IComponent
         }
     }
 
-    public bool IsEnabled { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public GameObject GameObject { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public bool IsEnabled { get; set; }
+    public GameObject GameObject { get; set; }
 
     /// <summary>
     /// Collider constructor

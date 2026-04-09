@@ -12,7 +12,7 @@ public class GameObject
     /// <summary>
     /// Should object follow camera or not
     /// </summary>
-    public bool IsUI { get; set; } = false;
+    public bool IsUI { get; private set; }
     /// <summary>
     /// Object world location
     /// </summary>
@@ -24,13 +24,15 @@ public class GameObject
     /// <summary>
     /// GameObject tag
     /// </summary>
-    public string Tag { get; set; }
+    public string Tag { get; private set; }
     /// <summary>
     /// GameObject constructor
     /// </summary>
-    public GameObject()
+    public GameObject(string _tag, bool _isUI = false)
     {
         Transform = new Transform();
+        IsUI = _isUI;
+        Tag = _tag;
     }
     /// <summary>
     /// Adds component to game object
@@ -114,6 +116,6 @@ public class GameObject
             component.Destroy();
         }
         // TODO: Figure out how to destroy the object
-        //Game1.Instance.Destroy(this);
+        GameLogic.ObjectManager.DestroyGameObject(this);
     }
 }

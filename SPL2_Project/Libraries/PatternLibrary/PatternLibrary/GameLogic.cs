@@ -10,10 +10,8 @@ public class GameLogic : Game
     protected GraphicsDeviceManager graphics;
     protected SpriteBatch spriteBatch;
     
-    public List<GameObject> GameObjects = new List<GameObject>();
-    private List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
-    private List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
     private List<Collider> colliders = new List<Collider>();
+    public static GameObjectManager ObjectManager = new GameObjectManager();
 
 
     public GameLogic()
@@ -43,15 +41,9 @@ public class GameLogic : Game
             Exit();
 
         // TODO: Add your update logic here
+        ObjectManager.CheckGameObjectList();
 
-        // Update all GameObjects
-        foreach (GameObject gameObject in GameObjects)
-        {
-            //if((GamePaused && gameObject.IsUI) || !GamePaused)
-            {
-                gameObject.Update(gameTime);
-            }
-        }
+        ObjectManager.UpdateGameObjects(gameTime);
 
         base.Update(gameTime);
     }
@@ -65,17 +57,7 @@ public class GameLogic : Game
         //spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, null, SamplerState, null, null, null, Camera.Instance.Transform); // Start drawing
         spriteBatch.Begin();
 
-        // Draw all GameObjects
-        foreach (GameObject gameObject in GameObjects)
-        {
-            if (!gameObject.IsUI)
-            {
-                //if(Math.Abs(Camera.Instance.CamPos.Y - gameObject.Transform.Position.Y) < 40 * 8) // Screen culling? (Works though)
-                {
-                    gameObject.Draw(spriteBatch);
-                }
-            }
-        }
+        ObjectManager.DrawGameObjects(spriteBatch);
 
         spriteBatch.End(); // Stop drawing
 
