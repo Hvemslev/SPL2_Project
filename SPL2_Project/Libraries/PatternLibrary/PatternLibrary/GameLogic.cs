@@ -11,7 +11,7 @@ public class GameLogic : Game
     protected SpriteBatch spriteBatch;
     
     private List<Collider> colliders = new List<Collider>();
-    public static GameObjectManager ObjectManager = new GameObjectManager();
+    public static readonly GameObjectManager ObjectManager = new GameObjectManager();
 
 
     public GameLogic()
