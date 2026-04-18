@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PatternLibrary;
+namespace PatternLibrary.GameObject;
 
 public interface IComponent
 {
@@ -38,7 +38,7 @@ public interface IComponent
     public void Draw(SpriteBatch spriteBatch);
 
     /// <summary>
-    /// Removes a game object.
+    /// Cleans data from component, on removal.
     /// </summary>
     public void Destroy();
 }

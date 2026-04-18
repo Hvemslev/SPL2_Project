@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PatternLibrary.GameObject;
 
 namespace PatternLibrary;
 
@@ -9,9 +10,6 @@ public class GameLogic : Game
 {
     protected GraphicsDeviceManager graphics;
     protected SpriteBatch spriteBatch;
-    
-    private List<Collider> colliders = new List<Collider>();
-    public static readonly GameObjectManager ObjectManager = new GameObjectManager();
 
 
     public GameLogic()
@@ -35,18 +33,28 @@ public class GameLogic : Game
         // TODO: use this.Content to load your game content here
     }
 
-    protected override void Update(GameTime gameTime)
+    // The engine owns the per-frame order: input first, then game logic.
+    // Derived games override UpdateGame instead of Update so they always see
+    // the newest input snapshot.
+    protected sealed override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
-        ObjectManager.CheckGameObjectList();
+        // TODO: Add input update here
 
-        ObjectManager.UpdateGameObjects(gameTime);
+        Locator.Objects.CheckGameObjectList();
+        Locator.Objects.UpdateGameObjects(gameTime);
+
+        Locator.Collisions.CheckColliderList();
+        Locator.Collisions.UpdateColliders();
+
+        UpdateGame(gameTime);
 
         base.Update(gameTime);
     }
+
+    protected virtual void UpdateGame(GameTime gameTime) { }
 
     protected override void Draw(GameTime gameTime)
     {
@@ -57,7 +65,7 @@ public class GameLogic : Game
         //spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, null, SamplerState, null, null, null, Camera.Instance.Transform); // Start drawing
         spriteBatch.Begin();
 
-        ObjectManager.DrawGameObjects(spriteBatch);
+        Locator.Objects.DrawGameObjects(spriteBatch);
 
         spriteBatch.End(); // Stop drawing
 

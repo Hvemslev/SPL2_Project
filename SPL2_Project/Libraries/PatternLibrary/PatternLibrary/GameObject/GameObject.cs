@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PatternLibrary;
+namespace PatternLibrary.GameObject;
 
 /// <summary>
 /// Template for game objects
@@ -116,6 +116,6 @@ public class GameObject
             component.Destroy();
         }
         // TODO: Figure out how to destroy the object
-        GameLogic.ObjectManager.DestroyGameObject(this);
+        Locator.Objects.DestroyGameObject(this);
     }
 }

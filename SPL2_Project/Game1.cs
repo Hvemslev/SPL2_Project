@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using PatternLibrary;
+using PatternLibrary.Audio;
+using PatternLibrary.Collider;
+using PatternLibrary.GameObject;
+using PatternLibrary.Tweening;
 
 namespace SPL2_Project;
 
 public class Game1 : GameLogic
 {
-    private GameObject thePlayer;
-
     public Game1() : base()
     {
     }
@@ -16,10 +16,14 @@ public class Game1 : GameLogic
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
+        Locator.Provide(new GameObjectManager());
+        Locator.Provide(new SoundManager());
+        Locator.Provide(new TweenManager());
+        Locator.Provide(new CollisionManager());
 
         base.Initialize();
 
-        thePlayer = ObjectManager.CreateGameObject("Player", new Vector2(100, 100));
+        GameObject thePlayer = Locator.Objects.CreateGameObject("Player", new Vector2(100, 100));
         thePlayer.AddComponent(new Player(graphics));
     }
 
@@ -30,11 +34,10 @@ public class Game1 : GameLogic
         // TODO: use this.Content to load your game content here
     }
 
-    protected override void Update(GameTime gameTime)
+    protected override void UpdateGame(GameTime gameTime)
     {
         // TODO: Add your update logic here
 
-        base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)

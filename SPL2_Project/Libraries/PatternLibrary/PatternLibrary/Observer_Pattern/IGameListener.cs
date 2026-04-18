@@ -1,6 +1,6 @@
+using PatternLibrary.GameObject;
 
-
-namespace PatternLibrary;
+namespace PatternLibrary.Event;
 
 /// <summary>
 /// Interface for things listening to GameEvents

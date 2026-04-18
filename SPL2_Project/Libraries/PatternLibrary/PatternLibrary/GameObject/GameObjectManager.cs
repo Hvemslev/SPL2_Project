@@ -3,13 +3,13 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PatternLibrary;
+namespace PatternLibrary.GameObject;
 
-public class GameObjectManager
+public class GameObjectManager : IGameObjectManager
 {
-    public List<GameObject> GameObjects = new List<GameObject>();
-    private List<GameObject> gameObjectsToBeAdded = new List<GameObject>();
-    private List<GameObject> gameObjectsToBeRemoved = new List<GameObject>();
+    public List<GameObject> GameObjects { get; private set; } = new List<GameObject>();
+    public List<GameObject> GameObjectsToBeAdded { get; private set; } = new List<GameObject>();
+    public List<GameObject> GameObjectsToBeRemoved { get; private set; } = new List<GameObject>();
 
 
     /// <summary>
@@ -25,7 +25,7 @@ public class GameObjectManager
 
         newGameObject.Awake();
 
-        gameObjectsToBeAdded.Add(newGameObject);
+        GameObjectsToBeAdded.Add(newGameObject);
 
         return newGameObject;
     }
@@ -42,7 +42,7 @@ public class GameObjectManager
             return;
         }
         
-        gameObjectsToBeRemoved.Add(_gameObjectToDestroy);
+        GameObjectsToBeRemoved.Add(_gameObjectToDestroy);
     }
 
     public void UpdateGameObjects(GameTime gameTime)
@@ -71,14 +71,14 @@ public class GameObjectManager
     /// </summary>
     public void CheckGameObjectList()
     {
-        GameObjects.AddRange(gameObjectsToBeAdded);
-        gameObjectsToBeAdded.Clear();
+        GameObjects.AddRange(GameObjectsToBeAdded);
+        GameObjectsToBeAdded.Clear();
 
-        foreach (GameObject goToRemove in gameObjectsToBeRemoved)
+        foreach (GameObject goToRemove in GameObjectsToBeRemoved)
         {
             GameObjects.Remove(goToRemove);
         }
 
-        gameObjectsToBeRemoved.Clear();
+        GameObjectsToBeRemoved.Clear();
     }
 }

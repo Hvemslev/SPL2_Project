@@ -1,35 +1,46 @@
 using System.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PatternLibrary.Collider;
+using PatternLibrary.Event;
 
-namespace PatternLibrary;
 
-// TODO: Remove dependance on GameWorld
+namespace PatternLibrary.GameObject;
+
+
 /// <summary>
 /// Component responsible for object collision and notification
 /// </summary>
-public class Collider : IComponent
+public class Collider : IComponent, ICollider
 {
-    private GameEvent onCollisionEvent = new GameEvent("Collision");
     private Vector2 size, origin;
     private Texture2D texture;
     
     /// <summary>
+    /// Send out event notification when collision is detected
+    /// </summary>
+    public GameEvent OnCollisionEvent { get; } = new GameEvent("Collision");
+
+    /// <summary>
     /// Should object check collision events
     /// </summary>
     public bool CheckCollisionEvents { get; set; }
+
     /// <summary>
     /// Collider position offset
     /// </summary>
     public Vector2 PositionOffset { get; set; }
+
     /// <summary>
     /// Collider scaling
     /// </summary>
     public Vector2 ColliderScale { get; set; } = new Vector2(1,1);
+
     /// <summary>
     /// Has object collided with anything
     /// </summary>
     public RectangleF LastCollisionBox { get; set; }
+
     /// <summary>
     /// Is collider gonna be moving
     /// </summary>
@@ -50,31 +61,39 @@ public class Collider : IComponent
         }
     }
 
+    /// <summary>
+    /// The component this interface is attached to
+    /// </summary>
+    public IComponent ColliderComponent { get; private set; }
+
     public bool IsEnabled { get; set; }
     public GameObject GameObject { get; set; }
+
 
     /// <summary>
     /// Collider constructor
     /// </summary>
     /// <param name="spriteRenderer">SpriteRenderer reference</param>
     /// <param name="gameListener">GameListener reference</param>
-    public Collider(SpriteRenderer spriteRenderer, IGameListener gameListener)
+    public Collider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer, IGameListener gameListener)
     {
-        onCollisionEvent.Attach(gameListener);
+        Dynamic = isDynamic;
+        OnCollisionEvent.Attach(gameListener);
         origin = spriteRenderer.Origin;
         size = new Vector2(spriteRenderer.Sprite.Width, spriteRenderer.Sprite.Height);
-        texture = GameWorld.Instance.CreateTexture(1, 1, pixel => Color.White);
+        texture = Helper.CreateTexture(graphicsDevice, 1, 1, pixel => Microsoft.Xna.Framework.Color.White);
     }
 
     /// <summary>
     /// Collider constructor
     /// </summary>
     /// <param name="spriteRenderer">SpriteRenderer reference</param>
-    public Collider(SpriteRenderer spriteRenderer)
+    public Collider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer)
     {
+        Dynamic = isDynamic;
         this.origin = spriteRenderer.Origin;
         this.size = new Vector2(spriteRenderer.Sprite.Width, spriteRenderer.Sprite.Height);
-        texture = GameWorld.Instance.CreateTexture(1, 1, pixel => Color.White);
+        texture = Helper.CreateTexture(graphicsDevice, 1, 1, pixel => Microsoft.Xna.Framework.Color.White);
     }
 
     public void Awake()
@@ -87,22 +106,15 @@ public class Collider : IComponent
     /// </summary>
     public void Start()
     {
-        if (Dynamic)
-        {
-            GameWorld.Instance.DynamicColliders.Add(this);
-            GameWorld.Instance.AddCollider(this);
-        }
-        else
-        {
-            GameWorld.Instance.AddCollider(this);
-        }
+        Locator.Collisions.AddCollider(this);
+        ColliderComponent = this;
     }
 
     /// <summary>
     /// Notify listener upon entering another collider
     /// </summary>
     /// <param name="other">Other collider collided with</param>
-    public void OnCollisionEnter(Collider other)
+    public void OnCollisionEnter(ICollider other)
     {
         if (CheckCollisionEvents)
         {
@@ -110,7 +122,7 @@ public class Collider : IComponent
             {
                 if (CollisionBox.IntersectsWith(other.CollisionBox))
                 {
-                    onCollisionEvent.Notify(other);
+                    OnCollisionEvent.Notify(other.ColliderComponent);
                 }
             }
         }
@@ -132,12 +144,17 @@ public class Collider : IComponent
     }
 
     /// <summary>
-    /// Attaches IGameListener to game event
+    /// Attaches IGameListener to be notified on collision
     /// </summary>
     /// <param name="listener"></param>
-    public void AttachListener(IGameListener listener)
+    public void AttachColliderListener(IGameListener listener)
     {
-        onCollisionEvent.Attach(listener);
+        OnCollisionEvent.Attach(listener);
+    }
+
+    public void DetachColliderListener(IGameListener listener)
+    {
+        OnCollisionEvent.Detach(listener);
     }
 
     /// <summary>
@@ -145,8 +162,7 @@ public class Collider : IComponent
     /// </summary>
     public void Destroy()
     {
-        GameWorld.Instance.DynamicColliders.Remove(this); 
-        GameWorld.Instance.RemoveCollider(this);
+        Locator.Collisions.RemoveCollider(this);
     }
 
     /// <summary>

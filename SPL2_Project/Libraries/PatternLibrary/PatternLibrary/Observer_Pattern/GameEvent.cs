@@ -1,8 +1,7 @@
-
-
 using System.Collections.Generic;
+using PatternLibrary.GameObject;
 
-namespace PatternLibrary;
+namespace PatternLibrary.Event;
 
 /// <summary>
 /// Class responsible for handling specific game event
@@ -11,10 +10,13 @@ public class GameEvent
 {
     // List of listeners that should be notified when event triggers
     private List<IGameListener> listeners = new List<IGameListener>();
+
     /// <summary>
     /// Event title
     /// </summary>
     public string Title { get; private set; }
+
+
     /// <summary>
     /// GameEvent constructor
     /// </summary>
@@ -23,6 +25,7 @@ public class GameEvent
     {
         this.Title = title;
     }
+
     /// <summary>
     /// Attach GameListener to event
     /// </summary>
@@ -31,6 +34,7 @@ public class GameEvent
     {
         listeners.Add(listener);
     }
+
     /// <summary>
     /// Detach GameListener from event
     /// </summary>
@@ -39,6 +43,7 @@ public class GameEvent
     {
         listeners.Remove(listener);
     }
+
     /// <summary>
     /// Notify listeners when event is triggered
     /// </summary>
