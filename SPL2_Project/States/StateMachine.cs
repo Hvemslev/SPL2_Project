@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SPL2_Project.States;
 
-public class StateMachine(Game1 game)
+public class StateMachine()
 {
     private IState _currentState;
 

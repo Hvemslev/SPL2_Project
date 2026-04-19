@@ -35,7 +35,7 @@ public class Game1 : Game
 
 
 
-        GameState = new StateMachine(this);
+        GameState = new StateMachine();
         GameState.ChangeState(GameState.PlayState);
     }
 
