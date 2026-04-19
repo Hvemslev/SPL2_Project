@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SPL2_Project.States;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,12 +12,12 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     public static Texture2D _texture;
 
-    private Player player;
-    private Enemy enemy;
-
     public static List<Bullet> bullets = new List<Bullet>();
 
     public static GameTime gameTime;
+
+    
+    public StateMachine GameState { get; set; }
 
     public Game1()
     {
@@ -30,9 +31,12 @@ public class Game1 : Game
         base.Initialize();
         _texture = new(GraphicsDevice, 1, 1);
         _texture.SetData([Color.White]);
-        player = new Player();
-        enemy = new Enemy(400, 400);
         gameTime = new GameTime();
+
+
+
+        GameState = new StateMachine(this);
+        GameState.ChangeState(GameState.PlayState);
     }
 
     protected override void LoadContent()
@@ -45,16 +49,7 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
-        player.Update();
-        enemy.Chase(player, gameTime);
-
-        foreach(Bullet b in bullets)
-        {
-            b.Update();
-        }
-
-
+        GameState.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -65,14 +60,8 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
 
-        foreach(Bullet b in bullets)
-        {
-            b.Draw(_spriteBatch);
-        }
-
-
-        _spriteBatch.Draw(_texture, new Rectangle((int)player.position.X, (int)player.position.Y, 20, 20), Color.White);
-        _spriteBatch.Draw(_texture, new Rectangle((int)enemy.position.X, (int)enemy.position.Y, 20, 20), Color.White);
+        GameState.Draw(_spriteBatch);
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);

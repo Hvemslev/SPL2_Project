@@ -1,3 +1,4 @@
+using SPL2_Project.States;
 using System;
 using System.Collections;
 using Microsoft.Xna.Framework;
@@ -46,8 +47,8 @@ public class Enemy
 
         if(distance <= maxRange)
         {
-            shotCooldown += gameTime.ElapsedGameTime.TotalSeconds;
-            if(shotCooldown >= 2)
+            shotCooldown += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if(shotCooldown >= 1000)
             {
                 shoot();
                 shotCooldown=0; 
@@ -62,6 +63,6 @@ public class Enemy
 
     public void shoot()
     {
-        Game1.bullets.Add(new Bullet(position, direction, bulletSpeed));
+        PlayState.bullets.Add(new Bullet(position, direction, bulletSpeed));
     }
 }
