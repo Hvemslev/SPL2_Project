@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PatternLibrary;
+namespace PatternLibrary.GameObject;
 
 // TODO: Make it work with Tilebuilder scripts
 /// <summary>
@@ -127,8 +127,8 @@ public class SpriteRenderer : IComponent
     /// Used for referencing component via name
     /// </summary>
     /// <returns>Class name</returns>
-    public override string ToString()
+    public string ComponentName()
     {
-        return ToString();
+        return this.ToString();
     }
 }

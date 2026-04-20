@@ -169,8 +169,8 @@ public class Collider : IComponent, ICollider
     /// Used for referencing component via name
     /// </summary>
     /// <returns>Class name</returns>
-    public override string ToString()
+    public string ComponentName()
     {
-        return "Collider";
+        return this.ToString();
     }
 }

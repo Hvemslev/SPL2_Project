@@ -41,9 +41,7 @@ public class Player : IComponent
     {
         Vector2 position = GameObject.Transform.Position;
 
-        _spriteBatch.Begin();
         _spriteBatch.Draw(line, new Rectangle((int)position.X, (int)position.Y, 200, 1), null, Color.White, lookAngleRadians, new Vector2(0, 0), SpriteEffects.None, 0);
-        _spriteBatch.End();
     }
 
     private Vector2 GetAimDirection()
@@ -63,8 +61,8 @@ public class Player : IComponent
     /// Used for referencing component via name
     /// </summary>
     /// <returns>Class name</returns>
-    public override string ToString()
+    public string ComponentName()
     {
-        return ToString();
+        return this.ToString();
     }
 }

@@ -13,11 +13,11 @@ public class CollisionManager : ICollisionManager
     /// <summary>
     /// List of colliders able to move around
     /// </summary>
-    public List<ICollider> DynamicColliders { get; }
+    public List<ICollider> DynamicColliders { get; } = new List<ICollider>();
 
-    public List<ICollider> CollidersToRemove { get; }
+    public List<ICollider> CollidersToRemove { get; } = new List<ICollider>();
 
-    public List<ICollider> CollidersToAdd { get; }
+    public List<ICollider> CollidersToAdd { get; } = new List<ICollider>();
 
 
     public void UpdateColliders()

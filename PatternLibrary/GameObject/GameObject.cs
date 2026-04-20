@@ -40,7 +40,7 @@ public class GameObject
     /// <param name="component"></param>
     public void AddComponent(IComponent component)
     {
-        components.Add(component.ToString(), component);
+        components.Add(component.ComponentName(), component);
         component.GameObject = this;
         component.IsEnabled = true;
     }

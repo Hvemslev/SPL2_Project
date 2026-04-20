@@ -41,4 +41,10 @@ public interface IComponent
     /// Cleans data from component, on removal.
     /// </summary>
     public void Destroy();
+
+    /// <summary>
+    /// Used for referencing component via name
+    /// </summary>
+    /// <returns>Class name</returns>
+    public string ComponentName();
 }
