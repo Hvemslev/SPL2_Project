@@ -1,0 +1,68 @@
+using SPL2_Project.States;
+using System;
+using System.Collections;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+
+namespace SPL2_Project;
+
+public class Enemy
+{
+    public Vector2 position = new Vector2(100, 100);
+
+    Vector2 direction;
+
+    private float enemySpeed = 3f;
+
+    float maxRange = 300;
+
+    int bulletSpeed = 15;
+
+    double shotCooldown = 0;
+    
+
+    public Enemy(int x, int y)
+    {
+        position.X = x;
+        position.Y = y;
+    }
+
+    public void Chase(Player player, GameTime gameTime)
+    {
+        
+        Vector2 directionLong = player.position-position;
+        
+        direction = Vector2.Normalize(directionLong);
+
+        float distance = directionLong.Length();
+        
+        if(distance > maxRange)
+        {
+            position += direction * enemySpeed;
+        } 
+        
+
+        
+
+
+        if(distance <= maxRange)
+        {
+            shotCooldown += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if(shotCooldown >= 1000)
+            {
+                shoot();
+                shotCooldown=0; 
+            }
+        } else
+        {
+            shotCooldown=0;
+        }
+        
+        
+    }
+
+    public void shoot()
+    {
+        PlayState.bullets.Add(new Bullet(position, direction, bulletSpeed));
+    }
+}
