@@ -129,6 +129,6 @@ public class SpriteRenderer : IComponent
     /// <returns>Class name</returns>
     public string ComponentName()
     {
-        return this.ToString();
+        return this.GetType().Name;
     }
 }

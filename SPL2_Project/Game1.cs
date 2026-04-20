@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using SPL2_Project.States;
 using PatternLibrary;
@@ -13,16 +12,14 @@ namespace SPL2_Project;
 
 public class Game1 : GameLogic
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
     public static Texture2D _texture;
 
     public static List<Bullet> bullets = new List<Bullet>();
 
     public static GameTime gameTime;
-
     
     public StateMachine GameState { get; set; }
+
 
     public Game1() : base()
     {
@@ -64,11 +61,11 @@ public class Game1 : GameLogic
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        _spriteBatch.Begin();
+        spriteBatch.Begin();
 
-        GameState.Draw(_spriteBatch);
+        GameState.Draw(spriteBatch);
         
-        _spriteBatch.End();
+        spriteBatch.End();
 
         base.Draw(gameTime);
     }
