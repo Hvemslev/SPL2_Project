@@ -1,55 +1,71 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using SPL2_Project.States;
+using PatternLibrary;
+using PatternLibrary.Audio;
+using PatternLibrary.Collider;
+using PatternLibrary.GameObject;
+using PatternLibrary.Tweening;
 
 namespace SPL2_Project;
 
-public class Game1 : Game
+public class Game1 : GameLogic
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
-    private Texture2D _texture;
+    public static Texture2D _texture;
 
-    private Player player;
+    public static List<Bullet> bullets = new List<Bullet>();
 
-    public Game1()
+    public static GameTime gameTime;
+    
+    public StateMachine GameState { get; set; }
+
+
+    public Game1() : base()
     {
-        _graphics = new GraphicsDeviceManager(this);
-        Content.RootDirectory = "Content";
-        IsMouseVisible = true;
     }
 
     protected override void Initialize()
     {
+        Locator.Provide(new GameObjectManager());
+        Locator.Provide(new SoundManager());
+        Locator.Provide(new TweenManager());
+        Locator.Provide(new CollisionManager());
+        
         base.Initialize();
         _texture = new(GraphicsDevice, 1, 1);
         _texture.SetData([Color.White]);
-        player = new Player();
+        gameTime = new GameTime();
+
+
+
+        GameState = new StateMachine();
+        GameState.ChangeState(GameState.PlayState);
     }
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        base.LoadContent();
+
+        // TODO: use this.Content to load your game content here
     }
 
-    protected override void Update(GameTime gameTime)
+    protected override void UpdateGame(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
         // TODO: Add your update logic here
-        player.Update();
+        GameState.Update(gameTime);
 
-        base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        _spriteBatch.Begin();
-        _spriteBatch.Draw(_texture, new Rectangle((int)player.position.X, (int)player.position.Y, 20, 20), Color.White);
-        _spriteBatch.End();
+        spriteBatch.Begin();
+
+        GameState.Draw(spriteBatch);
+        
+        spriteBatch.End();
 
         base.Draw(gameTime);
     }

@@ -1,3 +1,5 @@
 <Solution>
+  <Folder Name="/SPL2_Project/" />
+  <Project Path="PatternLibrary/PatternLibrary.csproj" />
   <Project Path="SPL2_Project/SPL2_Project.csproj" />
 </Solution>
