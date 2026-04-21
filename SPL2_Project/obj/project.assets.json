@@ -130,6 +130,16 @@
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
         }
+      },
+      "PatternLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/PatternLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PatternLibrary.dll": {}
+        }
       }
     }
   },
@@ -286,46 +296,59 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "PatternLibrary/1.0.0": {
+      "type": "project",
+      "path": "../PatternLibrary/PatternLibrary.csproj",
+      "msbuildProject": "../PatternLibrary/PatternLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
       "MonoGame.Content.Builder.Task >= 3.8.*",
-      "MonoGame.Framework.DesktopGL >= 3.8.*"
+      "MonoGame.Framework.DesktopGL >= 3.8.*",
+      "PatternLibrary >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ander\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\marti\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ander\\Desktop\\VSC\\SPL1\\Monogames\\SPL2_Project\\SPL2_Project\\SPL2_Project.csproj",
+      "projectUniqueName": "C:\\Programming Project\\VIA Semester Projekter\\spl2_projekt\\SPL2_Project\\SPL2_Project\\SPL2_Project.csproj",
       "projectName": "SPL2_Project",
-      "projectPath": "C:\\Users\\ander\\Desktop\\VSC\\SPL1\\Monogames\\SPL2_Project\\SPL2_Project\\SPL2_Project.csproj",
-      "packagesPath": "C:\\Users\\ander\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ander\\Desktop\\VSC\\SPL1\\Monogames\\SPL2_Project\\SPL2_Project\\obj\\",
+      "projectPath": "C:\\Programming Project\\VIA Semester Projekter\\spl2_projekt\\SPL2_Project\\SPL2_Project\\SPL2_Project.csproj",
+      "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
+      "outputPath": "C:\\Programming Project\\VIA Semester Projekter\\spl2_projekt\\SPL2_Project\\SPL2_Project\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\marti\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Programming Project\\VIA Semester Projekter\\spl2_projekt\\SPL2_Project\\PatternLibrary\\PatternLibrary.csproj": {
+              "projectPath": "C:\\Programming Project\\VIA Semester Projekter\\spl2_projekt\\SPL2_Project\\PatternLibrary\\PatternLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -369,7 +392,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
