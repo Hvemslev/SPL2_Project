@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SPL2_Project")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66a86c42cc219fcbd5acee7bf2d0db596dcca773")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c1ff3d1fecb8a386c17bb50c15bfd7dc80fd664")]
 [assembly: System.Reflection.AssemblyProductAttribute("SPL2_Project")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SPL2_Project")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
