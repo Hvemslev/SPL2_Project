@@ -18,11 +18,18 @@ public class Player : IComponent
 
     bool justFired = false;
 
+    public int chamberMax = 6; 
+    public int chamberCurrent;
+
+    private bool reloading;
+    private double reload;
+
     public bool IsEnabled { get; set; }
     public GameObject GameObject { get; set; }
 
     public Player()
     {
+        chamberCurrent = chamberMax;
     }
 
     public void Awake()
@@ -32,7 +39,7 @@ public class Player : IComponent
 
     public void Start()
     {
-        
+        //chamberCurrent = chamberMax;
     }
 
     public void Update(GameTime gameTime)
@@ -72,17 +79,48 @@ public class Player : IComponent
         
         if (Mouse.GetState().LeftButton==ButtonState.Pressed)
         {
-            if (justFired == false)
+            if (justFired == false && chamberCurrent > 0)
             {
                 shoot();
                 justFired = true;
+                chamberCurrent--;
             }
         } else {justFired = false;}
+
+        
+        if(Keyboard.GetState().IsKeyDown(Keys.R) && reloading==false)
+        {
+            reloading=true;
+            reload=0;
+        }
+        if (reloading)
+        {
+            reload+=gameTime.ElapsedGameTime.TotalMilliseconds;
+            if(reload > 1000)
+            {
+                chamberCurrent = chamberMax;
+                reloading=false;
+            }
+        }
+
+        Console.WriteLine(reload);
+
     }
 
     public void Draw(SpriteBatch _spriteBatch)
     {
         _spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+
+        //bulletCapacity
+        for(int i = 0; i < chamberMax; i++)
+        {
+           _spriteBatch.Draw(Game1._texture, new Rectangle(10+(20*i), 10, 15, 15), Color.Black); 
+        }
+        //bulletCount
+        for(int i = 0; i < chamberCurrent; i++)
+        {
+           _spriteBatch.Draw(Game1._texture, new Rectangle(10+(20*i), 10, 15, 15), Color.White); 
+        }
     }
 
     public void shoot()

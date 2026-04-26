@@ -13,12 +13,13 @@ namespace SPL2_Project;
 public class Game1 : GameLogic
 {
     public static Texture2D _texture;
+    public static SpriteFont _font;
 
     public static List<Bullet> bullets = new List<Bullet>();
 
     public static GameTime gameTime;
     
-    public StateMachine GameState { get; set; }
+    public static StateMachine GameState { get; set; }
 
 
     public Game1() : base()
@@ -46,7 +47,6 @@ public class Game1 : GameLogic
     protected override void LoadContent()
     {
         base.LoadContent();
-
         // TODO: use this.Content to load your game content here
     }
 
