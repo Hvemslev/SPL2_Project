@@ -109,7 +109,7 @@ public class Player : IComponent
 
     public void Draw(SpriteBatch _spriteBatch)
     {
-        _spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+        _spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.LimeGreen);
 
         //bulletCapacity
         for(int i = 0; i < chamberMax; i++)

@@ -12,7 +12,6 @@ public class PlayState() : IState
     //private List<Enemy> enemies = [];
     public static List<Bullet> bullets = [];
 
-    GameObject ui;
     public int killCount;
 
     private double enemySpawnCooldown;

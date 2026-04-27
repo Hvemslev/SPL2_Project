@@ -8,15 +8,14 @@ using PatternLibrary.GameObject;
 
 namespace SPL2_Project;
 
-public class playUI : IComponent
+public class titleUI : IComponent
 {
-    public bool IsEnabled { get; set; }
+    public bool IsEnabled { get; set; } = true;
 
     public GameObject GameObject { get; set; }
 
-    //public Player player = Game1.GameState.PlayState.playerObject.GetComponent("Player");
-
     SpriteFont font = Game1.font;
+    SpriteFont fontBig = Game1.fontBig;
 
     int kills = Game1.GameState.PlayState.killCount;
 
@@ -24,18 +23,18 @@ public class playUI : IComponent
 
     public void Start(){}
 
-    public void Update(GameTime gameTime){}
+    public void Update(GameTime gameTime)
+    {
+        if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+        {
+            this.IsEnabled=false;
+        }
+    }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        //bullet count
-        //for(int i = 0; i < player.chamberMax; i++)
-        /*for(int i = 0; i < 6; i++)
-        {
-           spriteBatch.Draw(Game1._texture, new Rectangle(10+(20*i), 10, 15, 15), Color.Black); 
-        }*/
-        spriteBatch.DrawString(font, $"{kills}", new Vector2(400,20), Color.White);
-        
+        spriteBatch.DrawString(fontBig, $"SHOOTY MCSHOOTFACE", new Vector2(100,200), Color.White);
+        spriteBatch.DrawString(font, $"Press enter", new Vector2(300,300), Color.White);
     }
 
     public void Destroy(){}

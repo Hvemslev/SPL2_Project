@@ -13,9 +13,9 @@ public class Enemy : IComponent
 
     private float enemySpeed = 3f;
 
-    float maxRange = 300;
+    float maxRange = 250;
 
-    int bulletSpeed = 15;
+    int bulletSpeed = 10;
 
     double shotCooldown = 0;
     
@@ -68,7 +68,7 @@ public class Enemy : IComponent
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+        spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.Red);
     }
 
     public void shoot()
