@@ -79,7 +79,7 @@ public class Player : IComponent
         
         if (Mouse.GetState().LeftButton==ButtonState.Pressed)
         {
-            if (justFired == false && chamberCurrent > 0)
+            if (justFired == false && chamberCurrent > 0 && reloading == false)
             {
                 shoot();
                 justFired = true;
@@ -88,7 +88,7 @@ public class Player : IComponent
         } else {justFired = false;}
 
         
-        if(Keyboard.GetState().IsKeyDown(Keys.R) && reloading==false)
+        if(Keyboard.GetState().IsKeyDown(Keys.R) && reloading == false)
         {
             reloading=true;
             reload=0;
