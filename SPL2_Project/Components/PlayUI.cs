@@ -34,7 +34,7 @@ public class playUI : IComponent
         {
            spriteBatch.Draw(Game1._texture, new Rectangle(10+(20*i), 10, 15, 15), Color.Black); 
         }*/
-        spriteBatch.DrawString(font, $"{kills}", new Vector2(400,20), Color.White);
+        spriteBatch.DrawString(font, $"{kills}", new Vector2(400,0), Color.White);
         
     }
 
