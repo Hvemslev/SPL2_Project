@@ -18,14 +18,17 @@ public class Enemy : IComponent
     int bulletSpeed = 15;
 
     double shotCooldown = 0;
+
+    GraphicsDevice graphic;
     
     public bool IsEnabled { get; set; }
     public GameObject GameObject { get; set; }
 
 
-    public Enemy(GameObject _playerObject)
+    public Enemy(GameObject _playerObject, GraphicsDevice _graphic)
     {
         playerObject = _playerObject;
+        graphic = _graphic;
     }
 
     public void Awake()
@@ -68,13 +71,18 @@ public class Enemy : IComponent
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+        //spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
     }
 
     public void shoot()
     {
-        Locator.Objects.CreateGameObject("Bullet", GameObject.Transform.Position)
-        .AddComponent(new Bullet(direction, bulletSpeed));
+        GameObject bullet = Locator.Objects.CreateGameObject("Bullet", GameObject.Transform.Position);
+        bullet.AddComponent(new Bullet(direction, bulletSpeed));
+        SpriteRenderer sprite = new SpriteRenderer(Game1._texture);
+        sprite.Scale = 10f;
+        bullet.AddComponent(sprite);
+        // TODO: Remove collider scale, when we have proper sprites with correct sizes
+        bullet.AddComponent(new Collider(true, graphic, sprite) { ColliderScale = new Vector2(10, 10) });
     }
 
     public void Destroy()

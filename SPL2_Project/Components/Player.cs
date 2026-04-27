@@ -18,11 +18,14 @@ public class Player : IComponent
 
     bool justFired = false;
 
+    GraphicsDevice graphic;
+
     public bool IsEnabled { get; set; }
     public GameObject GameObject { get; set; }
 
-    public Player()
+    public Player(GraphicsDevice _graphic)
     {
+        graphic = _graphic;
     }
 
     public void Awake()
@@ -82,7 +85,7 @@ public class Player : IComponent
 
     public void Draw(SpriteBatch _spriteBatch)
     {
-        _spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+        //_spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
     }
 
     public void shoot()
@@ -93,8 +96,13 @@ public class Player : IComponent
         Vector2 directionLong = mousePos - GameObject.Transform.Position;
         Vector2 direction = Vector2.Normalize(directionLong);
 
-        Locator.Objects.CreateGameObject("Bullet", GameObject.Transform.Position)
-        .AddComponent(new Bullet(direction, playerBulletSpeed));
+        GameObject bullet = Locator.Objects.CreateGameObject("Bullet", GameObject.Transform.Position);
+        bullet.AddComponent(new Bullet(direction, playerBulletSpeed));
+        SpriteRenderer sprite = new SpriteRenderer(Game1._texture);
+        sprite.Scale = 10f;
+        bullet.AddComponent(sprite);
+        // TODO: Remove collider scale, when we have proper sprites with correct sizes
+        bullet.AddComponent(new Collider(true, graphic, sprite) { ColliderScale = new Vector2(10, 10) });
     }
 
     private Vector2 GetAimDirection()

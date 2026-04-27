@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using System.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +26,7 @@ public class Collider : IComponent, ICollider
     /// <summary>
     /// Should object check collision events
     /// </summary>
-    public bool CheckCollisionEvents { get; set; }
+    public bool CheckCollisionEvents { get; set; } = true;
 
     /// <summary>
     /// Collider position offset
@@ -122,6 +124,7 @@ public class Collider : IComponent, ICollider
             {
                 if (CollisionBox.IntersectsWith(other.CollisionBox))
                 {
+                    Console.WriteLine("Colliding with " + other.ColliderComponent.GameObject.Tag);
                     OnCollisionEvent.Notify(other.ColliderComponent);
                 }
             }
@@ -139,8 +142,8 @@ public class Collider : IComponent, ICollider
     /// <param name="spriteBatch">SpriteBatch reference</param>
     public void Draw(SpriteBatch spriteBatch)
     {
-        //Microsoft.Xna.Framework.Rectangle tmp = new Microsoft.Xna.Framework.Rectangle((int)CollisionBox.X, (int)CollisionBox.Y, (int)CollisionBox.Width, (int)CollisionBox.Height);
-        //spriteBatch.Draw(texture, new Vector2(CollisionBox.X, CollisionBox.Y), tmp, Color.HotPink * 0.6f, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+        Microsoft.Xna.Framework.Rectangle tmp = new Microsoft.Xna.Framework.Rectangle((int)CollisionBox.X, (int)CollisionBox.Y, (int)CollisionBox.Width, (int)CollisionBox.Height);
+        spriteBatch.Draw(texture, new Vector2(CollisionBox.X, CollisionBox.Y), tmp, Microsoft.Xna.Framework.Color.HotPink * 0.6f, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
     }
 
     /// <summary>

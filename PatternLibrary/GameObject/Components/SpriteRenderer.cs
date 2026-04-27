@@ -75,6 +75,7 @@ public class SpriteRenderer : IComponent
     public SpriteRenderer(Texture2D sprite)
     {
         Sprite = sprite;
+        Origin = new Vector2(Sprite.Width / 2, Sprite.Height / 2);
     }
 
     public void Awake()

@@ -72,6 +72,12 @@ public class GameObjectManager : IGameObjectManager
     public void CheckGameObjectList()
     {
         GameObjects.AddRange(GameObjectsToBeAdded);
+
+        foreach (GameObject gameObject in GameObjectsToBeAdded)
+        {
+            gameObject.Start();
+        }
+
         GameObjectsToBeAdded.Clear();
 
         foreach (GameObject goToRemove in GameObjectsToBeRemoved)

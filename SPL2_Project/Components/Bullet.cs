@@ -37,7 +37,7 @@ public class Bullet : IComponent
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 10, 10), Color.White);
+        //spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 10, 10), Color.White);
     }
 
     public void Destroy()

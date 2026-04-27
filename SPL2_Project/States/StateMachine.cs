@@ -3,12 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SPL2_Project.States;
 
-public class StateMachine()
+public class StateMachine(GraphicsDevice _graphic)
 {
     private IState _currentState;
+    private GraphicsDevice graphic = _graphic;
+    private PlayState playState;
 
     public TitleState TitleState { get; private set; } = new TitleState();
-    public PlayState PlayState { get; private set; } = new PlayState();
+    public PlayState PlayState { get { if(playState == null) { playState = new PlayState(graphic); } return playState; } }
 
     public void ChangeState(IState newState)
     {

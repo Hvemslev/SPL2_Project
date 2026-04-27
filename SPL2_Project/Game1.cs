@@ -39,7 +39,7 @@ public class Game1 : GameLogic
 
 
 
-        GameState = new StateMachine();
+        GameState = new StateMachine(GraphicsDevice);
         GameState.ChangeState(GameState.PlayState);
     }
 
@@ -61,7 +61,7 @@ public class Game1 : GameLogic
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        spriteBatch.Begin();
+        spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack);
 
         GameState.Draw(spriteBatch);
         

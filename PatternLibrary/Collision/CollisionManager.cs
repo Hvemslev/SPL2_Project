@@ -1,14 +1,11 @@
 using System.Collections.Generic;
-using System.Drawing;
-using Microsoft.Xna.Framework;
-using PatternLibrary.Event;
 
 
 namespace PatternLibrary.Collider;
 
 public class CollisionManager : ICollisionManager
 {
-    public List<ICollider> Colliders { get; }
+    public List<ICollider> Colliders { get; } = new List<ICollider>();
 
     /// <summary>
     /// List of colliders able to move around
@@ -36,7 +33,8 @@ public class CollisionManager : ICollisionManager
         foreach(ICollider collider in CollidersToAdd)
         {
             if(collider.Dynamic) DynamicColliders.Add(collider); 
-            else Colliders.Add(collider);
+
+            Colliders.Add(collider);
         }
 
         CollidersToAdd.Clear();
@@ -44,10 +42,11 @@ public class CollisionManager : ICollisionManager
         foreach(ICollider collider in CollidersToRemove)
         {
             if(collider.Dynamic) DynamicColliders.Remove(collider); 
-            else Colliders.Remove(collider);
+            
+            Colliders.Remove(collider);
         }
 
-        DynamicColliders.Clear();
+        CollidersToRemove.Clear();
     }
 
     public void AddCollider(ICollider _colliderToAdd)
