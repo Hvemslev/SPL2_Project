@@ -14,7 +14,7 @@ public class Player : IComponent
 
     private int playerSpeed = 4;
 
-    private int playerBulletSpeed = 15;
+    private int playerBulletSpeed = 20;
 
     bool justFired = false;
 
