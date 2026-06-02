@@ -12,7 +12,7 @@ namespace PatternLibrary.GameObject;
 /// <summary>
 /// Component responsible for object collision and notification
 /// </summary>
-public class Collider : IComponent, ICollider
+public class CircleCollider : IComponent, ICollider
 {
     private Vector2 size, origin;
     private Texture2D texture;
@@ -51,14 +51,13 @@ public class Collider : IComponent, ICollider
     /// <summary>
     /// Collider collisionbox
     /// </summary>
-    public RectangleF CollisionBox {
+    public Circle CollisionCircle {
         get {
-            return new RectangleF
+            return new Circle
             (
-                GameObject.Transform.Position.X - origin.X + PositionOffset.X,
-                GameObject.Transform.Position.Y - origin.Y + PositionOffset.Y,
-                size.X * ColliderScale.X,
-                size.Y * ColliderScale.Y
+                (int)(GameObject.Transform.Position.X - origin.X + PositionOffset.X),
+                (int)(GameObject.Transform.Position.Y - origin.Y + PositionOffset.Y),
+                (int)(size.X * ColliderScale.X / 2)
             );
         }
     }
@@ -78,7 +77,7 @@ public class Collider : IComponent, ICollider
     /// </summary>
     /// <param name="spriteRenderer">SpriteRenderer reference</param>
     /// <param name="gameListener">GameListener reference</param>
-    public Collider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer, IGameListener gameListener)
+    public CircleCollider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer, IGameListener gameListener)
     {
         Dynamic = isDynamic;
         OnCollisionEvent.Attach(gameListener);
@@ -93,7 +92,7 @@ public class Collider : IComponent, ICollider
     /// </summary>
     /// <param name="spriteRenderer">SpriteRenderer reference</param>
     /// <param name="gameListener">GameListener reference</param>
-    public Collider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer, Action<string> collisionCallback)
+    public CircleCollider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer, Action<string> collisionCallback)
     {
         Dynamic = isDynamic;
         OnCollisionEvent2 += collisionCallback;
@@ -107,7 +106,7 @@ public class Collider : IComponent, ICollider
     /// Collider constructor
     /// </summary>
     /// <param name="spriteRenderer">SpriteRenderer reference</param>
-    public Collider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer)
+    public CircleCollider(bool isDynamic, GraphicsDevice graphicsDevice, SpriteRenderer spriteRenderer)
     {
         Dynamic = isDynamic;
         this.origin = spriteRenderer.Origin;
@@ -140,9 +139,9 @@ public class Collider : IComponent, ICollider
         {
             if (other != this)
             {
-                if(other.ColliderType == CollisionType.Rectangle)
+                if(other.ColliderType == CollisionType.Circle)
                 {
-                    if ( CollisionBox.IntersectsWith((other as Collider).CollisionBox))
+                    if (CollisionCircle.Intersects((other as CircleCollider).CollisionCircle))
                     {
                         Console.WriteLine("Colliding with " + other.ColliderComponent.GameObject.Tag);
                         OnCollisionEvent.Notify(other.ColliderComponent);
@@ -164,8 +163,8 @@ public class Collider : IComponent, ICollider
     /// <param name="spriteBatch">SpriteBatch reference</param>
     public void Draw(SpriteBatch spriteBatch)
     {
-        Microsoft.Xna.Framework.Rectangle tmp = new Microsoft.Xna.Framework.Rectangle((int)CollisionBox.X, (int)CollisionBox.Y, (int)CollisionBox.Width, (int)CollisionBox.Height);
-        spriteBatch.Draw(texture, new Vector2(CollisionBox.X, CollisionBox.Y), tmp, Microsoft.Xna.Framework.Color.HotPink * 0.6f, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+        //Microsoft.Xna.Framework.Circle tmp = new Microsoft.Xna.Framework.Circle((int)CollisionBox.X, (int)CollisionBox.Y, (int)CollisionBox.Width);
+        //spriteBatch.Draw(texture, new Vector2(CollisionBox.X, CollisionBox.Y), tmp, Microsoft.Xna.Framework.Color.HotPink * 0.6f, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
     }
 
     /// <summary>

@@ -2,16 +2,22 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PatternLibrary;
+using PatternLibrary.CommandPattern;
 using PatternLibrary.GameObject;
-using SPL2_Project;
-using SPL2_Project.States;
+using PatternLibrary.Input;
+using SPL2_Project.CommandPattern;
+
+
+namespace SPL2_Project.States;
+
 
 public class PlayState(GraphicsDevice _graphic) : IState
 {
     private List<Enemy> enemies = [];
     public static List<Bullet> bullets = [];
     private GraphicsDevice graphic = _graphic;
-    
+    private InputManager inputManager = new InputManager();
+    private InputHandler inputHandler;
     
     
     public void Enter()
@@ -19,7 +25,17 @@ public class PlayState(GraphicsDevice _graphic) : IState
         // TODO: Remove collider scale, when we have proper sprites with correct sizes
 
         GameObject playerObject = Locator.Objects.CreateGameObject("Player", new Vector2(100, 100));
-        playerObject.AddComponent(new Player(graphic));
+        Player player = new Player(graphic);
+
+        // Create commands for player actions and pass the player reference to them
+        MoveCommand moveUpCommand = new MoveCommand(new Vector2(0, -1), player);
+        MoveCommand moveDownCommand = new MoveCommand(new Vector2(0, 1), player);
+        MoveCommand moveLeftCommand = new MoveCommand(new Vector2(-1, 0), player);
+        MoveCommand moveRightCommand = new MoveCommand(new Vector2(1, 0), player);
+        ShootCommand shootCommand = new ShootCommand(player);
+        inputHandler = new InputHandler(moveUpCommand, moveLeftCommand, moveDownCommand, moveRightCommand, shootCommand);
+
+        playerObject.AddComponent(player);
         SpriteRenderer sprite = new SpriteRenderer(Game1._texture);
         sprite.Scale = 20f;
         playerObject.AddComponent(sprite);
@@ -32,13 +48,27 @@ public class PlayState(GraphicsDevice _graphic) : IState
         enemyObject.AddComponent(sprite);
         enemyObject.AddComponent(new Collider(true, graphic, sprite) { ColliderScale = new Vector2(20, 20) });
     }
-    public void Exit(){}
+
+    public void Exit()
+    {
+        inputHandler = null; // Clear input handler to prevent drawing issues with commands that hold references to game objects
+    }
+
+    // The engine owns the per-frame order: input first, then game logic.
     public void Update(GameTime gameTime)
     {
-        // TODO: Look into moving object updating to here
+        inputManager.Update(); // Update input manager to refresh key states
+        inputHandler.HandleInput(inputManager.Keyboard); // Pass keyboard info to input handler
+
+        Locator.Objects.CheckGameObjectList();
+        Locator.Objects.UpdateGameObjects(gameTime);
+
+        Locator.Collisions.CheckColliderList();
+        Locator.Collisions.UpdateColliders();
     }
+
     public void Draw(SpriteBatch spriteBatch)
     {
-        // TODO: Look into moving object drawing to here
+        Locator.Objects.DrawGameObjects(spriteBatch);
     }
 }
