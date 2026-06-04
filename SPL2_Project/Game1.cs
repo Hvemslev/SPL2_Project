@@ -18,9 +18,7 @@ public class Game1 : GameLogic
 
     public static GameTime gameTime;
     
-    public static StateMachine GameState { get; set; }
-
-    public static SpriteFont font, fontBig, fontSmall;
+    public StateMachine GameState { get; set; }
 
 
     public Game1() : base()
@@ -41,17 +39,15 @@ public class Game1 : GameLogic
 
 
 
-        GameState = new StateMachine();
-        GameState.ChangeState(GameState.TitleState);
+        GameState = new StateMachine(GraphicsDevice, Content);
+        GameState.ChangeState(GameState.PlayState);
     }
 
     protected override void LoadContent()
     {
         base.LoadContent();
+
         // TODO: use this.Content to load your game content here
-        font = Content.Load<SpriteFont>("font");
-        fontBig = Content.Load<SpriteFont>("font_Big");
-        fontSmall = Content.Load<SpriteFont>("font_Small");
     }
 
     protected override void UpdateGame(GameTime gameTime)
@@ -65,7 +61,7 @@ public class Game1 : GameLogic
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        spriteBatch.Begin();
+        spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack);
 
         GameState.Draw(spriteBatch);
         

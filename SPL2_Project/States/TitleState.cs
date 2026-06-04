@@ -1,12 +1,17 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+<<<<<<< HEAD
 using Microsoft.Xna.Framework.Input;
 using SPL2_Project;
 using SPL2_Project.States;
 using PatternLibrary;
 using PatternLibrary.GameObject;
+=======
+
+
+namespace SPL2_Project.States;
+
+>>>>>>> origin/Martin
 
 public class TitleState() : IState
 {
