@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SPL2_Project;
-using SPL2_Project.States;
+
+
+namespace SPL2_Project.States;
+
 
 public class TitleState() : IState
 {

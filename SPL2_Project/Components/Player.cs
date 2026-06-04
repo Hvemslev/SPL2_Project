@@ -13,16 +13,21 @@ public class Player : IComponent
     private float lookAngleRadians = 0;
 
     private int playerSpeed = 4;
+    private float shootCooldown = 0.5f; // Time in seconds between shots
+    private float shootTimer = 0f; // Timer to track time since last shot
 
     private int playerBulletSpeed = 15;
 
-    bool justFired = false;
+    //bool justFired = false;
+
+    GraphicsDevice graphic;
 
     public bool IsEnabled { get; set; }
     public GameObject GameObject { get; set; }
 
-    public Player()
+    public Player(GraphicsDevice _graphic)
     {
+        graphic = _graphic;
     }
 
     public void Awake()
@@ -39,62 +44,79 @@ public class Player : IComponent
     {
        currentLookDirection = GetAimDirection();
        lookAngleRadians = (float)Math.Atan2(currentLookDirection.Y, currentLookDirection.X);
+       shootTimer += (float)gameTime.ElapsedGameTime.TotalSeconds; // Update the shoot timer
 
        //Vector2 movementDirection = new Vector2(0,0);
-        Vector2 movement = new Vector2(0,0);
-        //movement = Vector2.Normalize(movementDirection);
-        
-        
-
-
-        if(Keyboard.GetState().IsKeyDown(Keys.W))
-        {
-            movement.Y=(-1);
-        } 
-        else if(Keyboard.GetState().IsKeyDown(Keys.S))
-        {
-            movement.Y=1;
-        } 
-        else {movement.Y=0;}
-
-        if(Keyboard.GetState().IsKeyDown(Keys.A))
-        {
-            movement.X=(-1);
-        } 
-        else if(Keyboard.GetState().IsKeyDown(Keys.D))
-        {
-            movement.X = 1;
-        } else {movement.X = 0;}
-
-
-        GameObject.Transform.Position += movement * playerSpeed;
-
-        
-        if (Mouse.GetState().LeftButton==ButtonState.Pressed)
-        {
-            if (justFired == false)
-            {
-                shoot();
-                justFired = true;
-            }
-        } else {justFired = false;}
+        //Vector2 movement = new Vector2(0,0);
+        ////movement = Vector2.Normalize(movementDirection);
+        //
+        //
+//
+//
+        //if(Keyboard.GetState().IsKeyDown(Keys.W))
+        //{
+        //    movement.Y=(-1);
+        //} 
+        //else if(Keyboard.GetState().IsKeyDown(Keys.S))
+        //{
+        //    movement.Y=1;
+        //} 
+        //else {movement.Y=0;}
+//
+        //if(Keyboard.GetState().IsKeyDown(Keys.A))
+        //{
+        //    movement.X=(-1);
+        //} 
+        //else if(Keyboard.GetState().IsKeyDown(Keys.D))
+        //{
+        //    movement.X = 1;
+        //} else {movement.X = 0;}
+//
+//
+        //GameObject.Transform.Position += movement * playerSpeed;
+//
+        //
+        //if (Mouse.GetState().LeftButton==ButtonState.Pressed)
+        //{
+        //    if (justFired == false)
+        //    {
+        //        shoot();
+        //        justFired = true;
+        //    }
+        //} else {justFired = false;}
     }
 
     public void Draw(SpriteBatch _spriteBatch)
     {
-        _spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+        //_spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+    }
+
+    public void Move(Vector2 direction)
+    {
+        GameObject.Transform.Position += direction * playerSpeed;
     }
 
     public void shoot()
     {
+        if(shootTimer < shootCooldown)
+        {
+            return; // Still in cooldown, do not shoot
+        }
+
         Vector2 mousePos;
         mousePos.X=Mouse.GetState().Position.X;
         mousePos.Y=Mouse.GetState().Position.Y;
         Vector2 directionLong = mousePos - GameObject.Transform.Position;
         Vector2 direction = Vector2.Normalize(directionLong);
 
-        Locator.Objects.CreateGameObject("Bullet", GameObject.Transform.Position)
-        .AddComponent(new Bullet(direction, playerBulletSpeed));
+        GameObject bullet = Locator.Objects.CreateGameObject("Bullet", GameObject.Transform.Position);
+        bullet.AddComponent(new Bullet(direction, playerBulletSpeed));
+        SpriteRenderer sprite = new SpriteRenderer(Game1._texture);
+        sprite.Scale = 10f;
+        bullet.AddComponent(sprite);
+        // TODO: Remove collider scale, when we have proper sprites with correct sizes
+        bullet.AddComponent(new Collider(true, graphic, sprite) { ColliderScale = new Vector2(10, 10) });
+        shootTimer = 0f; // Reset the shoot timer
     }
 
     private Vector2 GetAimDirection()
