@@ -15,15 +15,34 @@ namespace SPL2_Project.States;
 
 public class PlayState(GraphicsDevice _graphic, ContentManager _content) : IState
 {
-    private List<Enemy> enemies = [];
+    public GameObject playerObject;
+    //private List<Enemy> enemies = [];
     public static List<Bullet> bullets = [];
+<<<<<<< HEAD
+
+    public int killCount;
+
+    private double enemySpawnCooldown;
+    
+=======
     private GraphicsDevice graphic = _graphic;
     private InputManager inputManager = new InputManager();
     private InputHandler inputHandler;
+>>>>>>> origin/Martin
     
     
     public void Enter()
     {
+<<<<<<< HEAD
+        playerObject = Locator.Objects.CreateGameObject("Player", new Vector2(100, 100));
+        playerObject.AddComponent(new Player());
+        Locator.Objects.CreateGameObject("Enemy", new Vector2(400, 400))
+        .AddComponent(new Enemy(playerObject));
+        Locator.Objects.CreateGameObject("UI", new Vector2(0,0)).AddComponent(new playUI());
+        
+        killCount=0;
+        enemySpawnCooldown=0;
+=======
         // TODO: Remove collider scale, when we have proper sprites with correct sizes
 
         GameObject playerObject = Locator.Objects.CreateGameObject("Player", new Vector2(100, 100));
@@ -53,6 +72,7 @@ public class PlayState(GraphicsDevice _graphic, ContentManager _content) : IStat
         enemyObject.AddComponent(sprite);
         //enemyObject.AddComponent(new Collider(true, graphic, enemySprite.Origin, new Vector2(enemySprite.Width, enemySprite.Height)) { ColliderScale = new Vector2(20, 20) });
         enemyObject.AddComponent(new Collider(true, graphic, sprite) { ColliderScale = new Vector2(20, 20) });
+>>>>>>> origin/Martin
     }
 
     public void Exit()
@@ -63,6 +83,18 @@ public class PlayState(GraphicsDevice _graphic, ContentManager _content) : IStat
     // The engine owns the per-frame order: input first, then game logic.
     public void Update(GameTime gameTime)
     {
+<<<<<<< HEAD
+        // TODO: Look into moving object updating to here
+        enemySpawnCooldown+=gameTime.ElapsedGameTime.TotalMilliseconds;
+        if(enemySpawnCooldown >= 2000)
+        {
+            Locator.Objects.CreateGameObject("Enemy", RandomSpawnLocation.Generate())
+            .AddComponent(new Enemy(playerObject)); 
+            enemySpawnCooldown=0;   
+        }
+        
+
+=======
         inputManager.Update(); // Update input manager to refresh key states
         inputHandler.HandleInput(inputManager.Keyboard); // Pass keyboard info to input handler
 
@@ -71,6 +103,7 @@ public class PlayState(GraphicsDevice _graphic, ContentManager _content) : IStat
 
         Locator.Collisions.CheckColliderList();
         Locator.Collisions.UpdateColliders();
+>>>>>>> origin/Martin
     }
 
     public void Draw(SpriteBatch spriteBatch)
