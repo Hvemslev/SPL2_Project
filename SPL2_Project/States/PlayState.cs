@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using PatternLibrary;
 using PatternLibrary.CommandPattern;
 using PatternLibrary.GameObject;
+using PatternLibrary.Graphics;
 using PatternLibrary.Input;
 using SPL2_Project.CommandPattern;
 
@@ -11,7 +13,7 @@ using SPL2_Project.CommandPattern;
 namespace SPL2_Project.States;
 
 
-public class PlayState(GraphicsDevice _graphic) : IState
+public class PlayState(GraphicsDevice _graphic, ContentManager _content) : IState
 {
     private List<Enemy> enemies = [];
     public static List<Bullet> bullets = [];
@@ -41,11 +43,15 @@ public class PlayState(GraphicsDevice _graphic) : IState
         playerObject.AddComponent(sprite);
         playerObject.AddComponent(new Collider(true, graphic, sprite) { ColliderScale = new Vector2(20, 20) });
 
+        //TextureAtlas atlas = TextureAtlas.FromFile(_content, "atlas-definition.xml");
+        //AnimatedSprite enemySprite = atlas.CreateAnimatedSprite("bat-animation");
+
         GameObject enemyObject = Locator.Objects.CreateGameObject("Enemy", new Vector2(400, 400));
         enemyObject.AddComponent(new Enemy(playerObject, graphic));
         sprite = new SpriteRenderer(Game1._texture);
         sprite.Scale = 20f;
         enemyObject.AddComponent(sprite);
+        //enemyObject.AddComponent(new Collider(true, graphic, enemySprite.Origin, new Vector2(enemySprite.Width, enemySprite.Height)) { ColliderScale = new Vector2(20, 20) });
         enemyObject.AddComponent(new Collider(true, graphic, sprite) { ColliderScale = new Vector2(20, 20) });
     }
 

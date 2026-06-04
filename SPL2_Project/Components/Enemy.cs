@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PatternLibrary;
 using PatternLibrary.GameObject;
+using PatternLibrary.Graphics;
 
 namespace SPL2_Project;
 
@@ -20,10 +21,18 @@ public class Enemy : IComponent
     double shotCooldown = 0;
 
     GraphicsDevice graphic;
+    private AnimatedSprite animatedSprite = null;
     
     public bool IsEnabled { get; set; }
     public GameObject GameObject { get; set; }
 
+
+    public Enemy(GameObject _playerObject, GraphicsDevice _graphic, AnimatedSprite _animatedSprite)
+    {
+        playerObject = _playerObject;
+        graphic = _graphic;
+        animatedSprite = _animatedSprite;
+    }
 
     public Enemy(GameObject _playerObject, GraphicsDevice _graphic)
     {
@@ -67,11 +76,14 @@ public class Enemy : IComponent
         {
             shotCooldown=0;
         }
+
+        if(animatedSprite != null) animatedSprite.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         //spriteBatch.Draw(Game1._texture, new Rectangle((int)GameObject.Transform.Position.X, (int)GameObject.Transform.Position.Y, 20, 20), Color.White);
+        if(animatedSprite != null) animatedSprite.Draw(spriteBatch, GameObject.Transform.Position);
     }
 
     public void shoot()

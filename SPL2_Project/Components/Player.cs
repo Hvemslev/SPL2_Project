@@ -18,7 +18,7 @@ public class Player : IComponent
 
     private int playerBulletSpeed = 15;
 
-    bool justFired = false;
+    //bool justFired = false;
 
     GraphicsDevice graphic;
 

@@ -39,7 +39,7 @@ public class Game1 : GameLogic
 
 
 
-        GameState = new StateMachine(GraphicsDevice);
+        GameState = new StateMachine(GraphicsDevice, Content);
         GameState.ChangeState(GameState.PlayState);
     }
 

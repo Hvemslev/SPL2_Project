@@ -116,6 +116,19 @@ public class Collider : IComponent, ICollider
         ColliderType = CollisionType.Rectangle;
     }
 
+    /// <summary>
+    /// Collider constructor
+    /// </summary>
+    /// <param name="spriteRenderer">SpriteRenderer reference</param>
+    public Collider(bool isDynamic, GraphicsDevice graphicsDevice, Vector2 origin, Vector2 size)
+    {
+        Dynamic = isDynamic;
+        this.origin = origin;
+        this.size = size;
+        texture = Helper.CreateTexture(graphicsDevice, 1, 1, pixel => Microsoft.Xna.Framework.Color.White);
+        ColliderType = CollisionType.Rectangle;
+    }
+
     public void Awake()
     {
         

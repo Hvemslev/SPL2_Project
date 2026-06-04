@@ -1,16 +1,17 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SPL2_Project.States;
 
-public class StateMachine(GraphicsDevice _graphic)
+public class StateMachine(GraphicsDevice _graphic, ContentManager _content)
 {
     private IState _currentState;
     private GraphicsDevice graphic = _graphic;
     private PlayState playState;
 
     public TitleState TitleState { get; private set; } = new TitleState();
-    public PlayState PlayState { get { if(playState == null) { playState = new PlayState(graphic); } return playState; } }
+    public PlayState PlayState { get { if(playState == null) { playState = new PlayState(graphic, _content); } return playState; } }
 
     public void ChangeState(IState newState)
     {
